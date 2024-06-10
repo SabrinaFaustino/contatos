@@ -16,10 +16,10 @@ public class Contato {
     @SequenceGenerator(
             name = "CONTATOS_SEQ",
             sequenceName = "CONTATOS_SEQ",
-            allocationSize = 50
+            allocationSize = 1
     )
     private Long id;
-    private String name;
+    private String nome;
     private String email;
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
@@ -32,12 +32,12 @@ public class Contato {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEmail() {
@@ -61,11 +61,11 @@ public class Contato {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Contato contato = (Contato) o;
-        return Objects.equals(id, contato.id) && Objects.equals(name, contato.name) && Objects.equals(email, contato.email) && Objects.equals(dataNascimento, contato.dataNascimento);
+        return Objects.equals(id, contato.id) && Objects.equals(nome, contato.nome) && Objects.equals(email, contato.email) && Objects.equals(dataNascimento, contato.dataNascimento);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, dataNascimento);
+        return Objects.hash(id, nome, email, dataNascimento);
     }
 }
