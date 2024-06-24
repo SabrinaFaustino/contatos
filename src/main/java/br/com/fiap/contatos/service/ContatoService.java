@@ -1,5 +1,6 @@
 package br.com.fiap.contatos.service;
 
+import br.com.fiap.contatos.dto.ContatoExibicaoDto;
 import br.com.fiap.contatos.model.Contato;
 import br.com.fiap.contatos.repository.ContatoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,54 +14,30 @@ import java.util.Optional;
 public class ContatoService {
 
     @Autowired
-    private ContatoRepository contatoRepository;
-    public Contato gravar(Contato contato){
-        return contatoRepository.save(contato);
+    private ContatoRepository repository;
+    public ContatoExibicaoDto gravar(Contato contato){
+        return new ContatoExibicaoDto(repository.save(contato));
     }
 
-    public Contato buscarPorId(Long id){
-        Optional<Contato> contatoOptional = contatoRepository.findById(id);
+    public ContatoExibicaoDto buscarPorId(Long id){
+        Optional<Contato> contatoOptional = repository.findById(id);
         if(contatoOptional.isPresent()){
-            return contatoOptional.get();
+            return new ContatoExibicaoDto(contatoOptional.get());
         }else{
-            throw new RuntimeException("Contato não encontrado!");
+            throw new RuntimeException("Contato não existe");
         }
     }
 
-    public List<Contato> listarTodosOsContatos(){
-        return contatoRepository.findAll();
+    public List<Contato> listarTodos(){
+        return repository.findAll();
     }
 
     public void excluir(Long id){
-        Optional<Contato> contatoOptional = contatoRepository.findById(id);
-        if(contatoOptional.isPresent()){
-            contatoRepository.delete(contatoOptional.get());
-        }else{
-            throw new RuntimeException("Contato não encontrado!");
-        }
+        repository.delete(repository.findById(id).get());
     }
 
-    public List<Contato> mostrarAniversariantes(LocalDate dataInicial, LocalDate dataFinal){
-        return contatoRepository.findByDataNascimentoBetween(dataInicial, dataFinal);
+    public ContatoExibicaoDto atualizar(Contato contato){
+        return new ContatoExibicaoDto(repository.save(contato));
     }
 
-    public Contato atualizar(Contato contato){
-        Optional<Contato> contatoOptional = contatoRepository.findById(contato.getId());
-
-        if(contatoOptional.isPresent()){
-            return  contatoRepository.save(contato);
-        }else{
-            throw new RuntimeException("Contato não encontrado!");
-        }
-    }
-
-    public Contato buscarPeloNome(String nome){
-        Optional<Contato> contatoOptional = contatoRepository.findByNome(nome);
-
-        if(contatoOptional.isPresent()){
-            return contatoOptional.get();
-        }else{
-            throw new RuntimeException("Contato não encontrado!");
-        }
-    }
 }
