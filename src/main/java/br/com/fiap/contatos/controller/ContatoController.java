@@ -1,5 +1,6 @@
 package br.com.fiap.contatos.controller;
 
+import br.com.fiap.contatos.dto.ContatoCadastroDto;
 import br.com.fiap.contatos.dto.ContatoExibicaoDto;
 import br.com.fiap.contatos.model.Contato;
 import br.com.fiap.contatos.service.ContatoService;
@@ -18,8 +19,8 @@ public class ContatoController {
 
     @PostMapping("/contatos")
     @ResponseStatus(HttpStatus.CREATED)
-    public ContatoExibicaoDto gravar(@RequestBody Contato contato){
-        return service.gravar(contato);
+    public ContatoExibicaoDto gravar(@RequestBody ContatoCadastroDto contatoCadastroDto){
+        return service.gravar(contatoCadastroDto);
     }
 
     @GetMapping("/contatos/{id}")

@@ -1,8 +1,10 @@
 package br.com.fiap.contatos.service;
 
+import br.com.fiap.contatos.dto.ContatoCadastroDto;
 import br.com.fiap.contatos.dto.ContatoExibicaoDto;
 import br.com.fiap.contatos.model.Contato;
 import br.com.fiap.contatos.repository.ContatoRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,9 @@ public class ContatoService {
 
     @Autowired
     private ContatoRepository repository;
-    public ContatoExibicaoDto gravar(Contato contato){
+    public ContatoExibicaoDto gravar(ContatoCadastroDto contatoCadastroDto){
+        Contato contato = new Contato();
+        BeanUtils.copyProperties(contatoCadastroDto, contato);
         return new ContatoExibicaoDto(repository.save(contato));
     }
 
